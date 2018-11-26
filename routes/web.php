@@ -1,5 +1,7 @@
 <?php
 
+use App\Actor;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,32 +13,17 @@
 |
 */
 
-Route::get('/movies', 'MoviesController@index');
+Route::get('/actors', 'ActorsController@index');
+Route::get('/actors/{id}', 'ActorsController@show');
 
-Route::get('/movie-detail/{title}', 'MoviesController@detail');
-
-
-Route::get('/movies-sin-controller', function () {
-	$movies = [
-		['title' => 'Avatar', 'poster' => 'images/avatar.jpg' , 'genre' => 'Ciencia Ficción'],
-		['title' => 'Infinity War', 'poster' => 'images/avengers.jpg' , 'genre' => 'Acción'],
-		['title' => 'DeadPool', 'poster' => 'images/deadpool1.jpg' , 'genre' => 'Acción'],
-		['title' => 'Dragon Ball', 'poster' => 'images/dragonball.jpg' , 'genre' => 'Animé'],
-		['title' => 'Dunkerque', 'poster' => 'images/dunkirk.jpg' , 'genre' => 'Belico'],
-		['title' => 'Emoji', 'poster' => 'images/emoji.jpg' , 'genre' => 'Animada'],
-		['title' => 'Inception', 'poster' => 'images/inception1.jpg' , 'genre' => 'Drama'],
-		['title' => 'Moana', 'poster' => 'images/moana.jpg' , 'genre' => 'Animada'],
-		['title' => 'Rogue One', 'poster' => 'images/rogueone.jpg' , 'genre' => 'Acción'],
-		['title' => 'Titanic','poster' => 'images/titanic.jpg' , 'genre' => 'Drama']
-	];
-
-	echo "<link href='/css/app.css' rel='stylesheet'>";
-	echo "<h1>Listado de películas</h1>";
-	echo "<h2>ESTO RUTA NO USA CONTROLLER</h2>";
-	echo "<ul>";
-	foreach ($movies as $movie) {
-		echo "<li>" . $movie['title'] . ' - ' . $movie['genre'] . '</li>';
-		echo "<img src='/{$movie['poster']}' width='100'>";
+Route::get('/movies', function () {
+	$movies =  App\Movie::where('title', 'LIKE', '%a%');
+	$desc = true;
+	if ($desc) {
+		$movies = $movies->orderBy('title', 'asc');
+	}else{
+		$movies = $movies->orderBy('title', 'desc');
 	}
-	echo "</ul>";
+
+	return $movies->get();
 });

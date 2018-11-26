@@ -6,6 +6,7 @@
 		<link rel="stylesheet" href="/css/app.css">
 	</head>
 	<body>
+		@include('partials.navbar')
 		{{-- Defino el espacio que tendrá la información inyectada --}}
 		<div class="container">
 			<div class="row">
