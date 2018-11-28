@@ -13,17 +13,8 @@ use App\Actor;
 |
 */
 
-Route::get('/actors', 'ActorsController@index');
-Route::get('/actors/{id}', 'ActorsController@show');
-
-Route::get('/movies', function () {
-	$movies =  App\Movie::where('title', 'LIKE', '%a%');
-	$desc = true;
-	if ($desc) {
-		$movies = $movies->orderBy('title', 'asc');
-	}else{
-		$movies = $movies->orderBy('title', 'desc');
-	}
-
-	return $movies->get();
+Route::get('/', function () {
+	return view('welcome');
 });
+
+Route::get('/movies', 'MoviesController@index');

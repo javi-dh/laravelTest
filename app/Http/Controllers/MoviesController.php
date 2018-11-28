@@ -4,46 +4,93 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+// Llamo al modelo Movie para tenerlo siempre disponible en este archivo
+use App\Movie;
+
 class MoviesController extends Controller
 {
-	protected $movies = [
-		['title' => 'Avatar', 'poster' => 'images/avatar.jpg' , 'genre' => 'Ciencia Ficción'],
-		['title' => 'Infinity War', 'poster' => 'images/avengers.jpg' , 'genre' => 'Acción'],
-		['title' => 'DeadPool', 'poster' => 'images/deadpool1.jpg' , 'genre' => 'Acción'],
-		['title' => 'Dragon Ball', 'poster' => 'images/dragonball.jpg' , 'genre' => 'Animé'],
-		['title' => 'Dunkerque', 'poster' => 'images/dunkirk.jpg' , 'genre' => 'Belico'],
-		['title' => 'Emoji', 'poster' => 'images/emoji.jpg' , 'genre' => 'Animada'],
-		['title' => 'Inception', 'poster' => 'images/inception1.jpg' , 'genre' => 'Drama'],
-		['title' => 'Moana', 'poster' => 'images/moana.jpg' , 'genre' => 'Animada'],
-		['title' => 'Rogue One', 'poster' => 'images/rogueone.jpg' , 'genre' => 'Acción'],
-		['title' => 'Titanic','poster' => 'images/titanic.jpg' , 'genre' => 'Drama']
-	];
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+		  $topTenNew = Movie::orderBy('id', 'desc')
+		  	->take(10)
+			->get();
 
-	public function index()
-	{
-		// compact() me permite pasar información a una vista
-		// compact() recibe un string o varios strings
+		  $topTenAvg = Movie::where('rating', '>', 5)
+		  	->orderBy('title')
+			->take(10)
+			->get();
 
-		$moviesList = $this->movies;
-		$username = 'Diego';
-		$results = ['Titanic', 'DeadPool'];
+		  return view('movies.index')->with(compact(['topTenNew', 'topTenAvg']));
+    }
 
-		return view('movies')->with(compact('moviesList', 'username', 'results'));
-		// return view('movies', compact('moviesList', 'username'));
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
 
-		// la vista recibe una variable peliculas con el valor de $this->movies
-		// la vista recibe una variable username con el valor de Pedro
-		// return view('movies')->with('moviesList', $this->movies)->with('username', 'Pedro');
-	}
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
 
-	public function detail($title)
-	{
-		foreach ($this->movies as $movie) {
-			if ($movie['title'] === $title) {
-				$findIt = $movie;
-				break;
-			}
-		}
-		return view('movie_detail')->with(compact('findIt'));
-	}
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
 }
