@@ -14,7 +14,28 @@ use App\Actor;
 */
 
 Route::get('/', function () {
-	return view('welcome');
+	return view('home');
 });
 
 Route::get('/movies', 'MoviesController@index');
+Route::get('/movies/{id}', 'MoviesController@show');
+
+Route::get('/genres', 'GenresController@index');
+
+Route::get('/actors', function()
+{
+	$actors = \App\Actor::find(13);
+
+	dd($actors->movies);
+});
+
+Route::get('/actors/{id}', function($id) {
+	$actor = \App\Actor::find($id);
+	return $actor->movies;
+});
+
+
+Route::get('/test', function ()
+{
+	return DB::table('series')->where('id', 1)->get();
+});

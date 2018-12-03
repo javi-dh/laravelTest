@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Genre;
 
-// Llamo al modelo Movie para tenerlo siempre disponible en este archivo
-use App\Movie;
-
-class MoviesController extends Controller
+class GenresController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +14,9 @@ class MoviesController extends Controller
      */
     public function index()
     {
-		$movies = Movie::all();
+		$genres = Genre::all();
 
-		return view('movies.index')->with(compact('movies'));
+		return view('genres.index')->with(compact('genres'));
     }
 
     /**
@@ -50,9 +48,7 @@ class MoviesController extends Controller
      */
     public function show($id)
     {
-		 	$movie = Movie::findOrFail($id);
-
-			return view('movies.show')->with(compact('movie'));
+        //
     }
 
     /**
